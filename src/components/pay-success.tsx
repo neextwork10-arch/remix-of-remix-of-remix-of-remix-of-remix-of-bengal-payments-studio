@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { formatBdt } from "@/lib/providers";
-import { SUCCESS_GREEN } from "@/lib/pay-window";
 
 /** Shared "payment verified" screen shown after a successful verification. */
 export function PaySuccess({
