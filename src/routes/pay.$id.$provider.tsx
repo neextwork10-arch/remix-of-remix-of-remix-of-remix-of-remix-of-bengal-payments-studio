@@ -147,7 +147,7 @@ function ProviderPayPage() {
         ) : !account ? (
           <div className="mt-4 rounded-lg bg-card p-6 text-center shadow-sm ring-1 ring-border">
             <p className="text-sm text-muted-foreground">
-              {brand.label} এই পেমেন্টের জন্য সক্রিয় নয়।
+              {brand.label} এই পেমেন্টে চালু নেই।
             </p>
             <Link
               to="/pay/$id"
@@ -200,7 +200,7 @@ function ProviderPayPage() {
               style={{ background: brand.panelColor }}
             >
               <p className="mb-3 rounded-lg bg-card px-3 py-2 text-center text-sm font-semibold text-foreground">
-                নির্দেশনা অনুসরণ করুন
+                নিচের ধাপগুলো অনুসরণ করুন
               </p>
               <ul className="space-y-2.5 text-xs leading-relaxed">
                 {buildPaySteps(provider, account.accountType, account.accountNumber, info.amount).map(

@@ -94,7 +94,7 @@ export function buildPaySteps(
   return [
     {
       kind: "text",
-      text: `${brand.ussd} ডায়াল করুন অথবা ${brand.appName} অ্যাপে লগইন করুন। তারপর অপশন সিলেক্ট করুন`,
+      text: `${brand.ussd} ডায়াল করুন অথবা ${brand.appName} অ্যাপে লগইন করুন`,
     },
     { kind: "text", text: `"${brand.options[accountType]}" অপশন সিলেক্ট করুন` },
     { kind: "number", text: "নিচের নাম্বারটি সেখানে লিখুন", number: accountNumber },
@@ -102,11 +102,11 @@ export function buildPaySteps(
     { kind: "text", text: `নির্দেশ অনুযায়ী ${brand.label} পিন দিন` },
     {
       kind: "text",
-      text: `সম্পন্ন হিসেবে আসলে ${brand.label} থেকে আপনার ফোনে একটি নিশ্চিতকরণ এসএমএস পাবেন`,
+      text: `লেনদেন সফল হলে ${brand.label} থেকে আপনার ফোনে একটি নিশ্চিতকরণ এসএমএস আসবে`,
     },
     {
       kind: "text",
-      text: "অনুগ্রহ করে আপনার Transaction ID নিচের বক্সে লিখে VERIFY বাটনে চাপ দিন",
+      text: "অনুগ্রহ করে আপনার Transaction ID নিচের বক্সে লিখে VERIFY বাটনে চাপুন",
     },
   ];
 }
