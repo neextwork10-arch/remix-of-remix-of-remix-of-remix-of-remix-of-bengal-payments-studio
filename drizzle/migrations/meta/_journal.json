@@ -1,20 +1,5 @@
 {
   "version": "7",
   "dialect": "postgresql",
-  "entries": [
-    {
-      "idx": 0,
-      "version": "7",
-      "when": 1792835135755,
-      "tag": "0000_migration",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1792835949980,
-      "tag": "0001_restore_first_admin_trigger",
-      "breakpoints": true
-    }
-  ]
+  "entries": []
 }
