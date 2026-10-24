@@ -8,6 +8,13 @@
       "when": 1792837800282,
       "tag": "0000_restore_first_admin_trigger",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792838104068,
+      "tag": "0001_ensure_first_admin_trigger",
+      "breakpoints": true
     }
   ]
 }
