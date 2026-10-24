@@ -1,5 +1,14 @@
 # Roadmap
 
+## Store integration and Android SMS sender
+- [ ] Build and test downloadable Android SMS sender with offline retries.
+- [ ] Design and apply a NeextPay logo to web and Android app.
+- [ ] Add store callback URL/API key settings and store-scoped API keys.
+- [ ] Add create/list/details/delete/cancel payment APIs and separate transaction references.
+- [ ] Save submitted wallet TRX IDs, verify, notify the store and redirect on success.
+- [ ] Add saved one-hour expiry, automatic cancellation and realtime checkout countdown.
+- [ ] Test admin, store APIs, wallet checkout, callback delivery and SMS app; fix failures.
+
 ## Neext Pay refresh and real-flow QA
 - [ ] Rename gateway and apply shared modern theme to all pages.
 - [ ] Create logo intro video and show it on homepage/loading and checkout for five seconds.
