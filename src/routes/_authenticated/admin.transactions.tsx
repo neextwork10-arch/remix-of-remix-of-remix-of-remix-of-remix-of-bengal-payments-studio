@@ -72,7 +72,7 @@ function Transactions() {
                     <td className="px-5 py-3.5 font-semibold tabular-nums">{"৳" + formatBdt(r.amount)}</td>
                     <td className="px-5 py-3.5 font-mono text-xs">{r.trx_id ?? "—"}</td>
                     <td className="px-5 py-3.5"><StatusBadge status={r.status} /></td>
-                    <td className="px-5 py-3.5 text-xs text-muted-foreground">{r.callback_status ?? (r.callback_url ? "waiting" : "—")}</td>
+                    <td className="px-5 py-3.5 text-xs text-muted-foreground">{!r.callback_status || r.callback_status === "no_url" ? (r.callback_url ? "Waiting" : "—") : r.callback_status}</td>
                     <td className="space-x-1 whitespace-nowrap px-5 py-3.5 text-right">
                       {r.status !== "complete" && <Button size="sm" variant="secondary" onClick={() => setTo(r.id, "complete")}>Complete</Button>}
                       {r.status !== "failed" && <Button size="sm" variant="ghost" className="text-destructive hover:text-destructive" onClick={() => setTo(r.id, "failed")}>Fail</Button>}
