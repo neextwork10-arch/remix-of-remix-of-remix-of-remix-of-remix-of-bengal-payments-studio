@@ -69,7 +69,7 @@ function Transactions() {
                   <tr key={r.id} className="hover:bg-muted/30">
                     <td className="px-5 py-3.5"><p className="font-medium">{r.order_id ?? r.id.slice(0, 8)}</p><p className="text-xs text-muted-foreground">{new Date(r.created_at).toLocaleString()}</p></td>
                     <td className="px-5 py-3.5">{r.merchants?.name ?? "—"}{r.provider && <span className="ml-1.5 text-xs uppercase text-muted-foreground">{r.provider}</span>}</td>
-                    <td className="px-5 py-3.5 font-semibold tabular-nums">{formatBdt(r.amount)}</td>
+                    <td className="px-5 py-3.5 font-semibold tabular-nums">{"৳" + formatBdt(r.amount)}</td>
                     <td className="px-5 py-3.5 font-mono text-xs">{r.trx_id ?? "—"}</td>
                     <td className="px-5 py-3.5"><StatusBadge status={r.status} /></td>
                     <td className="px-5 py-3.5 text-xs text-muted-foreground">{r.callback_status ?? (r.callback_url ? "waiting" : "—")}</td>

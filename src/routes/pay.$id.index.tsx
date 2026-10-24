@@ -1,10 +1,8 @@
-import { Button } from "@/components/ui/button";
 import { NeextBrand } from "@/components/neext-brand";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { PaySuccess } from "@/components/pay-success";
 import {
-  CHECKOUT_BLUE,
   PROVIDER_BRAND,
   PROVIDER_ORDER,
   ProviderLogo,
@@ -118,111 +116,85 @@ function Checkout() {
     <div className="flex min-h-screen flex-col bg-background">
       <div className="mx-auto w-full max-w-md flex-1 px-4 pb-28 pt-6">
         <div className="mb-6 flex justify-center"><NeextBrand /></div>
-        {/* Merchant brand */}
-        <div className="flex flex-col items-center">
-          <div className="flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-card shadow-lg ring-1 ring-border">
-            {info.merchant.logoUrl ? (
-              <img
-                src={info.merchant.logoUrl}
-                alt={info.merchant.name}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <span className="text-3xl font-bold" >
-                {initial}
-              </span>
-            )}
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-card">
+          <div className="flex items-center gap-4">
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-secondary ring-1 ring-border">
+              {info.merchant.logoUrl ? (
+                <img src={info.merchant.logoUrl} alt={info.merchant.name} className="h-full w-full object-cover" />
+              ) : (
+                <span className="text-2xl font-extrabold text-secondary-foreground">{initial}</span>
+              )}
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-lg font-bold">{info.merchant.name}</p>
+              <p className="truncate text-xs text-muted-foreground">Reference: {info.orderId ?? "—"}</p>
+            </div>
+            <div className="flex gap-1.5 text-muted-foreground">
+              {[HeadsetIcon, HelpIcon, InfoIcon].map((Icon, i) => (
+                <span key={i} className="flex h-8 w-8 items-center justify-center rounded-full bg-muted"><Icon /></span>
+              ))}
+            </div>
           </div>
-          <p className="mt-3 text-lg font-semibold text-foreground">{info.merchant.name}</p>
-          <Button
-            type="button"
-            onClick={() => setShowDetails((v) => !v)}
-            className="mt-1 rounded-full bg-card px-3 py-0.5 text-xs font-medium shadow-sm ring-1 ring-border"
-            
-          >
-            {showDetails ? "Hide details" : "View Details"}
-          </Button>
+          <div className="mt-4 flex items-end justify-between border-t border-border pt-4">
+            <span className="text-sm text-muted-foreground">পরিশোধযোগ্য</span>
+            <span className="text-2xl font-extrabold tabular-nums">৳{formatBdt(info.amount)}</span>
+          </div>
+          <button type="button" onClick={() => setShowDetails((v) => !v)} className="mt-2 text-xs font-semibold text-primary">
+            {showDetails ? "Hide details" : "View details"}
+          </button>
           {showDetails ? (
-            <div className="mt-2 w-full rounded-lg bg-card p-3 text-xs shadow-sm ring-1 ring-border">
-              <p className="flex justify-between py-0.5">
-                <span className="text-muted-foreground">Amount</span>
-                <span className="font-semibold">৳{formatBdt(info.amount)}</span>
-              </p>
-              <p className="flex justify-between py-0.5">
-                <span className="text-muted-foreground">Reference</span>
-                <span className="font-mono">{info.orderId ?? "—"}</span>
-              </p>
+            <div className="mt-2 rounded-lg bg-muted p-3 text-xs">
+              <p className="flex justify-between py-0.5"><span className="text-muted-foreground">Amount</span><span className="font-semibold">৳{formatBdt(info.amount)}</span></p>
+              <p className="flex justify-between py-0.5"><span className="text-muted-foreground">Reference</span><span className="font-mono">{info.orderId ?? "—"}</span></p>
             </div>
           ) : null}
-          <div className="mt-3 flex gap-3">
-            {[HeadsetIcon, HelpIcon, InfoIcon].map((Icon, i) => (
-              <span
-                key={i}
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-card shadow-sm ring-1 ring-border"
-                
-              >
-                <Icon />
-              </span>
-            ))}
-          </div>
         </div>
 
-        {/* Method tabs */}
-        <div className="mt-5 grid grid-cols-2 gap-1 rounded-lg bg-card/80 p-1 shadow-sm ring-1 ring-border">
-          <Button
-            type="button"
-            onClick={() => setTab("mobile")}
-            className="rounded-lg px-3 py-2 text-sm font-semibold transition-colors"
-            
-          >
-            মোবাইল ব্যাংকিং
-          </Button>
-          <Button
-            type="button"
-            onClick={() => setTab("bank")}
-            className="rounded-lg px-3 py-2 text-sm font-semibold transition-colors"
-            
-          >
-            ব্যাংক ট্রান্সফার
-          </Button>
+        <div className="mt-5 grid grid-cols-2 gap-1 rounded-xl bg-muted p-1">
+          {(["mobile", "bank"] as const).map((t) => (
+            <button
+              key={t}
+              type="button"
+              onClick={() => setTab(t)}
+              className={tab === t ? "rounded-lg bg-card px-3 py-2 text-sm font-bold text-foreground shadow-card" : "rounded-lg px-3 py-2 text-sm font-semibold text-muted-foreground hover:text-foreground"}
+            >
+              {t === "mobile" ? "মোবাইল ব্যাংকিং" : "ব্যাংক ট্রান্সফার"}
+            </button>
+          ))}
         </div>
 
         {tab === "mobile" ? (
-          <div className="mt-4 grid grid-cols-2 gap-3">
-            {PROVIDER_ORDER.map((p) => {
-              const account = byProvider.get(p);
-              const brand = PROVIDER_BRAND[p];
-              return (
-                <Button
-                  key={p}
-                  type="button"
-                  disabled={!account}
-                  title={account ? undefined : `${brand.label} এই পেমেন্টে সক্রিয় নয়`}
-                  onClick={() =>
-                    navigate({ to: "/pay/$id/$provider", params: { id, provider: p } })
-                  }
-                  className="flex h-20 items-center justify-center rounded-lg bg-card shadow-sm ring-1 ring-border transition hover:-translate-y-0.5 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
-                >
-                  <ProviderLogo provider={p} className="h-9" />
-                </Button>
-              );
-            })}
-          </div>
+          <>
+            <p className="mb-2 mt-5 text-sm font-semibold text-muted-foreground">পেমেন্ট মাধ্যম বেছে নিন</p>
+            <div className="grid grid-cols-2 gap-3">
+              {PROVIDER_ORDER.map((p) => {
+                const account = byProvider.get(p);
+                const brand = PROVIDER_BRAND[p];
+                return (
+                  <button
+                    key={p}
+                    type="button"
+                    aria-label={brand.label}
+                    disabled={!account}
+                    title={account ? undefined : `${brand.label} এই পেমেন্টে সক্রিয় নয়`}
+                    onClick={() => navigate({ to: "/pay/$id/$provider", params: { id, provider: p } })}
+                    className="flex h-20 items-center justify-center rounded-xl border border-border bg-card shadow-card transition hover:-translate-y-0.5 hover:border-primary hover:shadow-card-lg disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:translate-y-0"
+                  >
+                    <ProviderLogo provider={p} className="h-9" />
+                  </button>
+                );
+              })}
+            </div>
+          </>
         ) : (
-          <div className="mt-4 rounded-lg bg-card p-6 text-center text-sm text-muted-foreground shadow-sm ring-1 ring-border">
+          <div className="mt-4 rounded-xl border border-border bg-card p-6 text-center text-sm text-muted-foreground">
             ব্যাংক ট্রান্সফার শীঘ্রই যোগ হচ্ছে। এখন মোবাইল ব্যাংকিং ব্যবহার করুন।
           </div>
         )}
       </div>
 
-      {/* Bottom pay bar */}
-      <div
-        className="fixed inset-x-0 bottom-0 z-10 py-3 text-center"
-        
-      >
-        <p className="text-base font-bold" >
-          Pay ৳{formatBdt(info.amount)} BDT
-        </p>
+      <div className="fixed inset-x-0 bottom-0 z-10 border-t border-sidebar-border bg-sidebar py-4 text-center text-sidebar-foreground">
+        <p className="text-base font-bold">Pay <span className="text-brand-lime">৳{formatBdt(info.amount)}</span> BDT</p>
       </div>
     </div>
   );

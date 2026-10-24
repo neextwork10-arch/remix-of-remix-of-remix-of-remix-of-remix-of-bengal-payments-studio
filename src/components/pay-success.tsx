@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { formatBdt } from "@/lib/providers";
-import { SUCCESS_GREEN } from "@/lib/pay-window";
 
 /** Shared "payment verified" screen shown after a successful verification. */
 export function PaySuccess({
@@ -20,11 +19,9 @@ export function PaySuccess({
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="w-full max-w-sm rounded-lg bg-card p-8 text-center shadow-xl">
+      <div className="w-full max-w-sm rounded-2xl border border-border bg-card p-8 text-center shadow-card-lg">
         <div
-          className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-success text-3xl font-bold text-primary-foreground"
-          
-        >
+          className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-success text-3xl font-bold text-success-foreground">
           ✓
         </div>
         <h2 className="mt-4 text-xl font-bold text-foreground">Payment verified</h2>

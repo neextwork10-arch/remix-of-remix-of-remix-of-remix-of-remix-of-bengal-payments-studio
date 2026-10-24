@@ -138,7 +138,7 @@ function ProviderPayPage() {
       <div className="mx-auto w-full max-w-md px-4 pb-10 pt-5">
         <div className="mb-5 flex justify-center"><NeextBrand /></div>
         {/* Provider header */}
-        <div className="flex items-center justify-center rounded-lg bg-card py-4 shadow-sm ring-1 ring-border">
+        <div className="flex items-center justify-center rounded-2xl bg-card py-5 shadow-card ring-1 ring-border">
           <ProviderLogo provider={provider} className="h-10" />
         </div>
 
@@ -196,8 +196,8 @@ function ProviderPayPage() {
 
             {/* Instructions panel */}
             <div
-              className="mt-4 rounded-lg bg-primary p-4 text-primary-foreground shadow-md"
-              
+              className="mt-4 rounded-2xl p-5 text-primary-foreground shadow-card-lg"
+              style={{ background: brand.panelColor }}
             >
               <p className="mb-3 rounded-lg bg-card px-3 py-2 text-center text-sm font-semibold text-foreground">
                 নির্দেশনা অনুসরণ করুন
@@ -214,8 +214,10 @@ function ProviderPayPage() {
                             <b className="text-sm tracking-wide">{step.number}</b>
                             <Button
                               type="button"
+                              variant="secondary"
+                              size="sm"
                               onClick={copyNumber}
-                              className="flex items-center gap-1 rounded-md bg-card px-2 py-0.5 text-[11px] font-bold text-foreground"
+                              className="h-6 gap-1 bg-card px-2 text-[11px] font-bold text-foreground hover:bg-card/90"
                             >
                               <CopyIcon /> Copy
                             </Button>
@@ -241,6 +243,7 @@ function ProviderPayPage() {
                 value={trx}
                 onChange={(e) => setTrx(e.target.value.toUpperCase())}
                 placeholder="Transaction ID লিখুন"
+                aria-label="Transaction ID"
                 autoComplete="off"
                 className="mt-4 w-full rounded-lg border-0 bg-card px-3 py-2.5 text-sm font-medium tracking-wide text-foreground outline-none placeholder:text-muted-foreground"
               />
@@ -256,8 +259,9 @@ function ProviderPayPage() {
               type="button"
               onClick={() => void verify()}
               disabled={phase === "verifying" || trx.trim().length < 4}
-              className="mt-4 w-full rounded-lg px-4 py-3 text-sm font-bold tracking-wide text-primary-foreground shadow-md transition-opacity disabled:opacity-50"
-              
+              size="lg"
+              className="mt-4 h-12 w-full rounded-xl text-sm font-bold text-primary-foreground shadow-card-lg hover:opacity-90"
+              style={{ background: brand.color }}
             >
               {phase === "verifying" ? "VERIFYING…" : "VERIFY"}
             </Button>
@@ -265,8 +269,7 @@ function ProviderPayPage() {
             <Link
               to="/pay/$id"
               params={{ id }}
-              className="mt-3 block text-center text-xs font-medium"
-              
+              className="mt-4 block text-center text-sm font-medium text-muted-foreground hover:text-foreground"
             >
               ← অন্য পেমেন্ট মাধ্যম
             </Link>
