@@ -20,7 +20,7 @@ function Dashboard() {
     { label: "Total payments", value: data?.totalPayments ?? 0, icon: Receipt },
     { label: "Completed", value: data?.completedCount ?? 0, icon: CheckCircle2 },
     { label: "Pending", value: data?.pendingCount ?? 0, icon: Clock },
-    { label: "Collected", value: formatBdt(data?.completedTotal ?? 0), icon: Coins, highlight: true },
+    { label: "Collected", value: "৳" + formatBdt(data?.completedTotal ?? 0), icon: Coins, highlight: true },
   ];
   return (
     <div className="space-y-8">
@@ -56,7 +56,7 @@ function Dashboard() {
                   <tr key={r.id} className="hover:bg-muted/30">
                     <td className="px-5 py-3.5 font-medium">{r.order_id ?? r.id.slice(0, 8)}</td>
                     <td className="px-5 py-3.5 text-muted-foreground">{r.merchants?.name ?? "—"}</td>
-                    <td className="px-5 py-3.5 font-semibold tabular-nums">{formatBdt(r.amount)}</td>
+                    <td className="px-5 py-3.5 font-semibold tabular-nums">{"৳" + formatBdt(r.amount)}</td>
                     <td className="px-5 py-3.5"><StatusBadge status={r.status} /></td>
                     <td className="px-5 py-3.5 text-muted-foreground">{new Date(r.created_at).toLocaleString()}</td>
                   </tr>
