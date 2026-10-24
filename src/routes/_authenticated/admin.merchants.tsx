@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import { listMerchants, saveMerchant, saveMerchantAccount } from "@/lib/serverfns/admin";
 import type { Database } from "@/integrations/supabase/types";
 import { EmptyState, LoadingRows, PageHeader, Panel, StatusBadge, fieldClass } from "@/components/admin-ui";
-import { PROVIDER_ORDER, PROVIDER_BRAND, ProviderLogo, type Provider } from "@/lib/providers";
+import { PROVIDER_ORDER, ProviderLogo, type Provider } from "@/lib/providers";
 
 type MerchantAccount = Database["public"]["Tables"]["merchant_accounts"]["Row"];
 type Merchant = Database["public"]["Tables"]["merchants"]["Row"] & { merchant_accounts: MerchantAccount[] };
@@ -26,7 +26,7 @@ function AccountFields({ value, onChange }: { value: typeof emptyAccount; onChan
   return (
     <>
       <select aria-label="Provider" value={value.provider} onChange={(e) => onChange({ ...value, provider: e.target.value as Provider })} className={fieldClass}>
-        {PROVIDER_ORDER.map((p) => <option key={p} value={p}>{PROVIDER_BRAND[p].name}</option>)}
+        {PROVIDER_ORDER.map((p) => <option key={p} value={p}>{p.charAt(0).toUpperCase() + p.slice(1)}</option>)}
       </select>
       <select aria-label="Account type" value={value.accountType} onChange={(e) => onChange({ ...value, accountType: e.target.value })} className={fieldClass}>
         <option value="personal">Personal</option>
@@ -52,7 +52,7 @@ function Merchants() {
 
   async function add(e: React.FormEvent) {
     e.preventDefault();
-    if (!ACCOUNT_RE.test(acct.accountNumber)) return toast.error("Enter a valid account number, e.g. 01712345678");
+    if (!ACCOUNT_RE.test(acct.accountNumber)) { toast.error("Enter a valid account number, e.g. 01712345678"); return; }
     setBusy(true);
     try {
       const merchant = await save({ data: { name } });
@@ -65,7 +65,7 @@ function Merchants() {
 
   async function addAccount(e: React.FormEvent, merchantId: string) {
     e.preventDefault();
-    if (!ACCOUNT_RE.test(extra.accountNumber)) return toast.error("Enter a valid account number, e.g. 01712345678");
+    if (!ACCOUNT_RE.test(extra.accountNumber)) { toast.error("Enter a valid account number, e.g. 01712345678"); return; }
     try {
       await saveAccount({ data: { merchantId, ...extra } });
       setAddingTo(null); setExtra(emptyAccount);
