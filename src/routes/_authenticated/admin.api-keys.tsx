@@ -99,7 +99,7 @@ function ApiKeys() {
                     <p className="truncate text-xs text-muted-foreground">{m.account_number ?? m.sender} · {new Date(m.received_at).toLocaleString()}</p>
                   </div>
                   <div className="text-right">
-                    <p className="font-semibold tabular-nums">{m.amount != null ? formatBdt(m.amount) : "—"}</p>
+                    <p className="font-semibold tabular-nums">{m.amount != null ? "৳" + formatBdt(m.amount) : "—"}</p>
                     <StatusBadge status={m.matched_payment_id ? "complete" : "pending"} />
                   </div>
                 </div>
