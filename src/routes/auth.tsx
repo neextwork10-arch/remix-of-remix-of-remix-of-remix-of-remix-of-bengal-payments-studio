@@ -70,29 +70,32 @@ function AuthPage() {
       <div className="w-full max-w-sm">
         <div className="mb-6 flex flex-col items-center gap-2">
           <NeextBrand />
-          <h1 className="text-xl font-bold text-foreground">Neext Pay Admin</h1>
+          <h1 className="mt-2 text-2xl font-extrabold text-foreground">Welcome back</h1>
+          <p className="text-sm text-muted-foreground">Sign in to manage payments and merchants.</p>
         </div>
 
-        <div className="rounded-lg bg-card p-6 shadow-card-lg">
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-card-lg">
           <div className="mb-5 grid grid-cols-2 rounded-lg bg-muted p-1 text-sm font-medium">
             <Button
               type="button"
+              variant="ghost"
               onClick={() => setMode("signin")}
               className={
                 mode === "signin"
-                  ? "rounded-lg bg-card px-3 py-2 text-foreground shadow-card"
-                  : "rounded-lg px-3 py-2 text-muted-foreground"
+                  ? "h-9 rounded-md bg-card text-foreground shadow-card hover:bg-card"
+                  : "h-9 rounded-md text-muted-foreground hover:bg-transparent hover:text-foreground"
               }
             >
               Sign in
             </Button>
             <Button
               type="button"
+              variant="ghost"
               onClick={() => setMode("signup")}
               className={
                 mode === "signup"
-                  ? "rounded-lg bg-card px-3 py-2 text-foreground shadow-card"
-                  : "rounded-lg px-3 py-2 text-muted-foreground"
+                  ? "h-9 rounded-md bg-card text-foreground shadow-card hover:bg-card"
+                  : "h-9 rounded-md text-muted-foreground hover:bg-transparent hover:text-foreground"
               }
             >
               Create account
@@ -146,7 +149,8 @@ function AuthPage() {
             <Button
               type="submit"
               disabled={busy}
-              className="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition-colors hover:bg-primary/90 disabled:opacity-60"
+              size="lg"
+              className="w-full font-semibold"
             >
               {busy ? "Please wait…" : mode === "signin" ? "Sign in" : "Create account"}
             </Button>
