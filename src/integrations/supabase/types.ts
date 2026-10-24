@@ -23,6 +23,8 @@ export type Database = {
           key_prefix: string
           label: string
           last_used_at: string | null
+          merchant_id: string | null
+          scope: string
         }
         Insert: {
           created_at?: string
@@ -32,6 +34,8 @@ export type Database = {
           key_prefix: string
           label: string
           last_used_at?: string | null
+          merchant_id?: string | null
+          scope?: string
         }
         Update: {
           created_at?: string
@@ -41,8 +45,18 @@ export type Database = {
           key_prefix?: string
           label?: string
           last_used_at?: string | null
+          merchant_id?: string | null
+          scope?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "api_keys_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "merchants"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       gateway_devices: {
         Row: {
@@ -132,7 +146,9 @@ export type Database = {
       merchants: {
         Row: {
           account_number: string | null
+          callback_api_key: string | null
           callback_secret: string | null
+          callback_url: string | null
           created_at: string
           id: string
           is_active: boolean
@@ -140,10 +156,14 @@ export type Database = {
           nagad_number: string
           name: string
           provider: string
+          success_url: string | null
+          website_origin: string | null
         }
         Insert: {
           account_number?: string | null
+          callback_api_key?: string | null
           callback_secret?: string | null
+          callback_url?: string | null
           created_at?: string
           id?: string
           is_active?: boolean
@@ -151,10 +171,14 @@ export type Database = {
           nagad_number?: string
           name: string
           provider?: string
+          success_url?: string | null
+          website_origin?: string | null
         }
         Update: {
           account_number?: string | null
+          callback_api_key?: string | null
           callback_secret?: string | null
+          callback_url?: string | null
           created_at?: string
           id?: string
           is_active?: boolean
@@ -162,6 +186,8 @@ export type Database = {
           nagad_number?: string
           name?: string
           provider?: string
+          success_url?: string | null
+          website_origin?: string | null
         }
         Relationships: []
       }
@@ -170,12 +196,17 @@ export type Database = {
           account_number: string | null
           account_type: string | null
           amount: number
+          callback_api_key: string | null
           callback_sent_at: string | null
           callback_status: string | null
           callback_url: string | null
           created_at: string
           customer_name: string | null
           customer_phone: string | null
+          customer_user_id: string | null
+          deleted_at: string | null
+          expires_at: string
+          gateway_trx: string
           id: string
           merchant_id: string
           metadata: Json
@@ -183,20 +214,27 @@ export type Database = {
           provider: string | null
           redirect_url: string | null
           status: string
+          store_trx: string | null
           trx_id: string | null
           updated_at: string
+          user_verify_trx: string | null
           verified_at: string | null
         }
         Insert: {
           account_number?: string | null
           account_type?: string | null
           amount: number
+          callback_api_key?: string | null
           callback_sent_at?: string | null
           callback_status?: string | null
           callback_url?: string | null
           created_at?: string
           customer_name?: string | null
           customer_phone?: string | null
+          customer_user_id?: string | null
+          deleted_at?: string | null
+          expires_at?: string
+          gateway_trx?: string
           id?: string
           merchant_id: string
           metadata?: Json
@@ -204,20 +242,27 @@ export type Database = {
           provider?: string | null
           redirect_url?: string | null
           status?: string
+          store_trx?: string | null
           trx_id?: string | null
           updated_at?: string
+          user_verify_trx?: string | null
           verified_at?: string | null
         }
         Update: {
           account_number?: string | null
           account_type?: string | null
           amount?: number
+          callback_api_key?: string | null
           callback_sent_at?: string | null
           callback_status?: string | null
           callback_url?: string | null
           created_at?: string
           customer_name?: string | null
           customer_phone?: string | null
+          customer_user_id?: string | null
+          deleted_at?: string | null
+          expires_at?: string
+          gateway_trx?: string
           id?: string
           merchant_id?: string
           metadata?: Json
@@ -225,8 +270,10 @@ export type Database = {
           provider?: string | null
           redirect_url?: string | null
           status?: string
+          store_trx?: string | null
           trx_id?: string | null
           updated_at?: string
+          user_verify_trx?: string | null
           verified_at?: string | null
         }
         Relationships: [
@@ -322,6 +369,7 @@ export type Database = {
         Args: { p_payment: string; p_sms: string }
         Returns: boolean
       }
+      expire_payments: { Args: never; Returns: number }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
