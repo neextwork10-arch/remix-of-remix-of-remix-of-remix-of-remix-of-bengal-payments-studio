@@ -66,7 +66,6 @@ function Checkout() {
   const navigate = useNavigate();
   const [info, setInfo] = useState<PayWindowData | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [tab, setTab] = useState<"mobile" | "bank">("mobile");
   const [showDetails, setShowDetails] = useState(false);
 
   useEffect(() => {
@@ -150,47 +149,26 @@ function Checkout() {
           ) : null}
         </div>
 
-        <div className="mt-5 grid grid-cols-2 gap-1 rounded-xl bg-muted p-1">
-          {(["mobile", "bank"] as const).map((t) => (
-            <button
-              key={t}
-              type="button"
-              onClick={() => setTab(t)}
-              className={tab === t ? "rounded-lg bg-card px-3 py-2 text-sm font-bold text-foreground shadow-card" : "rounded-lg px-3 py-2 text-sm font-semibold text-muted-foreground hover:text-foreground"}
-            >
-              {t === "mobile" ? "মোবাইল ব্যাংকিং" : "ব্যাংক ট্রান্সফার"}
-            </button>
-          ))}
+        <p className="mb-2 mt-6 text-sm font-semibold text-muted-foreground">মোবাইল ব্যাংকিং — পেমেন্ট মাধ্যম বেছে নিন</p>
+        <div className="grid grid-cols-2 gap-3">
+          {PROVIDER_ORDER.map((p) => {
+            const account = byProvider.get(p);
+            const brand = PROVIDER_BRAND[p];
+            return (
+              <button
+                key={p}
+                type="button"
+                aria-label={brand.label}
+                disabled={!account}
+                title={account ? undefined : `${brand.label} এই পেমেন্টে চালু নেই`}
+                onClick={() => navigate({ to: "/pay/$id/$provider", params: { id, provider: p } })}
+                className="flex h-20 items-center justify-center rounded-xl border border-border bg-card shadow-card transition hover:-translate-y-0.5 hover:border-primary hover:shadow-card-lg disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:translate-y-0"
+              >
+                <ProviderLogo provider={p} className="h-9" />
+              </button>
+            );
+          })}
         </div>
-
-        {tab === "mobile" ? (
-          <>
-            <p className="mb-2 mt-5 text-sm font-semibold text-muted-foreground">পেমেন্ট মাধ্যম বেছে নিন</p>
-            <div className="grid grid-cols-2 gap-3">
-              {PROVIDER_ORDER.map((p) => {
-                const account = byProvider.get(p);
-                const brand = PROVIDER_BRAND[p];
-                return (
-                  <button
-                    key={p}
-                    type="button"
-                    aria-label={brand.label}
-                    disabled={!account}
-                    title={account ? undefined : `${brand.label} এই পেমেন্টে সক্রিয় নয়`}
-                    onClick={() => navigate({ to: "/pay/$id/$provider", params: { id, provider: p } })}
-                    className="flex h-20 items-center justify-center rounded-xl border border-border bg-card shadow-card transition hover:-translate-y-0.5 hover:border-primary hover:shadow-card-lg disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:translate-y-0"
-                  >
-                    <ProviderLogo provider={p} className="h-9" />
-                  </button>
-                );
-              })}
-            </div>
-          </>
-        ) : (
-          <div className="mt-4 rounded-xl border border-border bg-card p-6 text-center text-sm text-muted-foreground">
-            ব্যাংক ট্রান্সফার শীঘ্রই যোগ হচ্ছে। এখন মোবাইল ব্যাংকিং ব্যবহার করুন।
-          </div>
-        )}
       </div>
 
       <div className="fixed inset-x-0 bottom-0 z-10 border-t border-sidebar-border bg-sidebar py-4 text-center text-sidebar-foreground">
