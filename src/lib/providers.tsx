@@ -1,4 +1,15 @@
 // Brand data, logos and Bengali payment instructions for the four supported
+import bkashLogo from "@/assets/providers/bkash-logo.svg.asset.json";
+import nagadLogo from "@/assets/providers/nagad-logo.svg.asset.json";
+import upayLogo from "@/assets/providers/upay-logo.svg.asset.json";
+import rocketLogo from "@/assets/providers/rocket-logo.svg.asset.json";
+
+const PROVIDER_LOGO_URL: Record<string, string> = {
+  bkash: bkashLogo.url,
+  nagad: nagadLogo.url,
+  upay: upayLogo.url,
+  rocket: rocketLogo.url,
+};
 // MFS providers. Client-safe: no server imports.
 
 export type Provider = "bkash" | "nagad" | "upay" | "rocket";
@@ -111,7 +122,7 @@ export function buildPaySteps(
   ];
 }
 
-/** Stylized provider logo marks (SVG) for the checkout grid and headers. */
+/** Official provider logos for the checkout grid and headers. */
 export function ProviderLogo({
   provider,
   className = "h-9",
@@ -119,82 +130,12 @@ export function ProviderLogo({
   provider: Provider;
   className?: string;
 }) {
-  const bengali = "'Noto Sans Bengali', 'Hind Siliguri', sans-serif";
-  const latin = "Arial, Helvetica, sans-serif";
-  switch (provider) {
-    case "bkash":
-      return (
-        <svg viewBox="0 0 140 44" className={className} role="img" aria-label="bKash">
-          <path
-            d="M8 33 C 36 12, 94 7, 134 15 C 100 11, 46 17, 14 35 Z"
-            fill="#E2136E"
-            opacity="0.85"
-          />
-          <text
-            x="10"
-            y="29"
-            fontStyle="italic"
-            fontWeight="800"
-            fontSize="25"
-            fill="#E2136E"
-            fontFamily={latin}
-          >
-            bKash
-          </text>
-        </svg>
-      );
-    case "nagad":
-      return (
-        <svg viewBox="0 0 140 44" className={className} role="img" aria-label="Nagad">
-          <circle cx="21" cy="21" r="17" fill="#EC6608" />
-          <path
-            d="M21 7 C 30 12, 30 23, 21 34 C 18 25, 18 14, 21 7 Z"
-            fill="#ffffff"
-            opacity="0.9"
-          />
-          <text x="46" y="27" fontWeight="800" fontSize="20" fill="#EC6608" fontFamily={bengali}>
-            নগদ
-          </text>
-          <text x="46" y="38" fontSize="8" letterSpacing="3" fill="#6b6b6b" fontFamily={latin}>
-            NAGAD
-          </text>
-        </svg>
-      );
-    case "upay":
-      return (
-        <svg viewBox="0 0 140 44" className={className} role="img" aria-label="Upay">
-          <rect x="5" y="5" width="32" height="32" rx="9" fill="#009CA6" />
-          <text
-            x="21"
-            y="28"
-            textAnchor="middle"
-            fontWeight="800"
-            fontSize="19"
-            fill="#ffffff"
-            fontFamily={latin}
-          >
-            U
-          </text>
-          <text x="46" y="27" fontWeight="800" fontSize="20" fill="#15568C" fontFamily={bengali}>
-            উপায়
-          </text>
-          <text x="46" y="38" fontSize="8" letterSpacing="2" fill="#6b6b6b" fontFamily={latin}>
-            UPAY
-          </text>
-        </svg>
-      );
-    case "rocket":
-      return (
-        <svg viewBox="0 0 150 44" className={className} role="img" aria-label="Rocket">
-          <path
-            d="M14 34 C 12 20, 20 10, 29 6 C 32 15, 28 27, 20 34 Z"
-            fill="#8C3494"
-          />
-          <path d="M20 34 L 13 41 L 18 32 Z" fill="#B85FC0" />
-          <text x="40" y="30" fontWeight="800" fontSize="22" fill="#8C3494" fontFamily={latin}>
-            Rocket
-          </text>
-        </svg>
-      );
-  }
+  return (
+    <img
+      src={PROVIDER_LOGO_URL[provider]}
+      alt={PROVIDER_BRAND[provider].label}
+      className={`${className} w-auto max-w-full object-contain`}
+      draggable={false}
+    />
+  );
 }
