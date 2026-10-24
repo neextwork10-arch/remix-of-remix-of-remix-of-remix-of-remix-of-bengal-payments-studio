@@ -94,7 +94,7 @@ export function buildPaySteps(
   return [
     {
       kind: "text",
-      text: `${brand.ussd} ডায়াল করে অথবা ${brand.appName} অ্যাপে লগইন করে অপশন সিলেক্ট করুন`,
+      text: `${brand.ussd} ডায়াল করুন অথবা ${brand.appName} অ্যাপে লগইন করুন। তারপর অপশন সিলেক্ট করুন`,
     },
     { kind: "text", text: `"${brand.options[accountType]}" অপশন সিলেক্ট করুন` },
     { kind: "number", text: "নিচের নাম্বারটি সেখানে লিখুন", number: accountNumber },
